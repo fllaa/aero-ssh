@@ -1,8 +1,8 @@
-import { expo } from '@better-auth/expo';
-import { betterAuth, type BetterAuthOptions } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@aero-ssh/db";
 import * as schema from "@aero-ssh/db/schema/auth";
+import { expo } from "@better-auth/expo";
+import { type BetterAuthOptions, betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
 export const auth = betterAuth<BetterAuthOptions>({
 	database: drizzleAdapter(db, {
@@ -21,5 +21,5 @@ export const auth = betterAuth<BetterAuthOptions>({
 			httpOnly: true,
 		},
 	},
-  plugins: [expo()]
+	plugins: [expo()],
 });

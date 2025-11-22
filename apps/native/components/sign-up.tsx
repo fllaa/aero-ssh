@@ -1,14 +1,15 @@
-import { authClient } from "@/lib/auth-client";
-import { queryClient } from "@/utils/trpc";
+import { Card, useThemeColor } from "heroui-native";
+import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import {
 	ActivityIndicator,
+	Pressable,
 	Text,
 	TextInput,
-	Pressable,
 	View,
 } from "react-native";
-import { Card, useThemeColor } from "heroui-native";
+import { authClient } from "@/lib/auth-client";
+import { queryClient } from "@/utils/trpc";
 
 function signUpHandler({
 	name,
@@ -19,6 +20,15 @@ function signUpHandler({
 	setName,
 	setEmail,
 	setPassword,
+}: {
+	name: string;
+	email: string;
+	password: string;
+	setError: Dispatch<SetStateAction<string | null>>;
+	setIsLoading: Dispatch<SetStateAction<boolean>>;
+	setName: Dispatch<SetStateAction<string>>;
+	setEmail: Dispatch<SetStateAction<string>>;
+	setPassword: Dispatch<SetStateAction<string>>;
 }) {
 	setIsLoading(true);
 	setError(null);
@@ -55,9 +65,9 @@ export function SignUp() {
 	const [error, setError] = useState<string | null>(null);
 
 	const mutedColor = useThemeColor("muted");
-	const accentColor = useThemeColor("accent");
+	const _accentColor = useThemeColor("accent");
 	const foregroundColor = useThemeColor("foreground");
-	const dangerColor = useThemeColor("danger");
+	const _dangerColor = useThemeColor("danger");
 
 	function handlePress() {
 		signUpHandler({
@@ -77,13 +87,13 @@ export function SignUp() {
 			<Card.Title className="mb-4">Create Account</Card.Title>
 
 			{error && (
-				<View className="mb-4 p-3 bg-danger/10 rounded-lg">
+				<View className="mb-4 rounded-lg bg-danger/10 p-3">
 					<Text className="text-danger text-sm">{error}</Text>
 				</View>
 			)}
 
 			<TextInput
-				className="mb-3 py-3 px-4 rounded-lg bg-surface text-foreground border border-divider"
+				className="mb-3 rounded-lg border border-divider bg-surface px-4 py-3 text-foreground"
 				placeholder="Name"
 				value={name}
 				onChangeText={setName}
@@ -91,7 +101,7 @@ export function SignUp() {
 			/>
 
 			<TextInput
-				className="mb-3 py-3 px-4 rounded-lg bg-surface text-foreground border border-divider"
+				className="mb-3 rounded-lg border border-divider bg-surface px-4 py-3 text-foreground"
 				placeholder="Email"
 				value={email}
 				onChangeText={setEmail}
@@ -101,7 +111,7 @@ export function SignUp() {
 			/>
 
 			<TextInput
-				className="mb-4 py-3 px-4 rounded-lg bg-surface text-foreground border border-divider"
+				className="mb-4 rounded-lg border border-divider bg-surface px-4 py-3 text-foreground"
 				placeholder="Password"
 				value={password}
 				onChangeText={setPassword}
@@ -112,12 +122,12 @@ export function SignUp() {
 			<Pressable
 				onPress={handlePress}
 				disabled={isLoading}
-				className="bg-accent p-4 rounded-lg flex-row justify-center items-center active:opacity-70"
+				className="flex-row items-center justify-center rounded-lg bg-accent p-4 active:opacity-70"
 			>
 				{isLoading ? (
 					<ActivityIndicator size="small" color={foregroundColor} />
 				) : (
-					<Text className="text-foreground font-medium">Sign Up</Text>
+					<Text className="font-medium text-foreground">Sign Up</Text>
 				)}
 			</Pressable>
 		</Card>
