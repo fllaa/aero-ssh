@@ -37,6 +37,7 @@
 		"db:down": "turbo -F @aero-ssh/db db:down"
 	},
 	"dependencies": {
+		"@heroui/theme": "^2.4.23",
 		"dotenv": "^17.2.2",
 		"zod": "^4.1.11"
 	},
